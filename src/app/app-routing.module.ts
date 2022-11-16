@@ -3,14 +3,22 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren:() => import('./home/home.module').then(m=> m.HomePageModule),
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'home-tambah',
+    loadChildren: () => import('./home-tambah/home-tambah.module').then( m => m.HomeTambahPageModule)
   },
+  {
+    path: 'home-edit',
+    loadChildren: () => import('./home-edit/home-edit.module').then( m => m.HomeEditPageModule)
+  }
 ];
 
 @NgModule({
@@ -19,4 +27,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
