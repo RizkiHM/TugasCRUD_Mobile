@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AutoLoginGuard } from './guards/auto-login.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren:() => import('./home/home.module').then(m=> m.HomePageModule),
-    pathMatch: 'full'
-  },
-  {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule), canLoad: [AuthGuard]
   },
   {
     path: 'home-tambah',
@@ -18,7 +15,16 @@ const routes: Routes = [
   {
     path: 'home-edit',
     loadChildren: () => import('./home-edit/home-edit.module').then( m => m.HomeEditPageModule)
-  }
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule), canLoad: [AutoLoginGuard]
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
